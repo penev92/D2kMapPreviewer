@@ -6,33 +6,69 @@ using System.Threading.Tasks;
 
 namespace Dune_2000_map_reader
 {
-    struct AISection
+    class AISection
     {
-        public byte[] data;     // 7608 bytes
-    };
+        public const int ByteCount = 7608;
 
-    struct DiplomacyRow
-    {
-        public byte[] data;     // 8 bytes
-    };
+        public byte[] data = new byte[ByteCount];
 
-    struct Event
-    {
-        public byte[] data;     // 72 bytes
-    };
+        public override string ToString()
+        {
+            // Current implementation until we can actually make use of this
+            return string.Empty;
+        }
+    }
 
-    struct Condition
+    class DiplomacyRow
     {
-        public byte[] data;     // 28 bytes
+        public const int ByteCount = 8;
+
+        public byte[] data = new byte[ByteCount];
+
+        public override string ToString()
+        {
+            return string.Join(",", data);
+        }
+    }
+
+    class Event
+    {
+        public const int ByteCount = 72;
+
+        public byte[] data = new byte[ByteCount];
+
+        public override string ToString()
+        {
+            // Current implementation until we get more information on this
+            return "Not currently supported.";
+        }
+    }
+
+    class Condition
+    {
+        public const int ByteCount = 28;
+
+        public byte[] data = new byte[ByteCount];
+
+        public override string ToString()
+        {
+            // Current implementation until we get more information on this
+            return "Not currently supported.";
+        }
     };
 
     class MisFileDataObject
     {
+        /// <summary> Tech level per faction </summary>
         public byte[] HouseTechLevel;           // ok
-        public Int32[] StartingMoney;           // ok
+        /// <summary> Starting money per faction </summary>
+        public int[] StartingMoney;             // ok
         public byte[] UnknownRegion1;           // wtf
+        /// <summary> ? per faction </summary>
         public byte[] HouseIndexAllocation;     // wtf
+        /// <summary> AI section per faction? </summary>
         public AISection[] AISection;           // wtf
+        /// <summary> DiplomacyRow per faction </summary>
         public DiplomacyRow[] Diplomacy;        // ok
         public Event[] Events;                  // wtf, needs more research
         public Condition[] Conditions;          // wtf, needs more research
@@ -40,7 +76,7 @@ namespace Dune_2000_map_reader
         public char[] TilesetDataName;          // ?, needs more research
         public byte EventCount;                 // ok, useless at the moment
         public byte ConditionCount;             // ok, useless at the moment
-        public Int32 TimeLimit;                 // ok
+        public int TimeLimit;                   // ok
         public byte[] UnknownRegion2;           // wtf
 
         public string Tileset { get { return new string(TilesetImageName).Replace("\0", ""); } }
@@ -49,7 +85,7 @@ namespace Dune_2000_map_reader
         public MisFileDataObject()
         {
             HouseTechLevel = new byte[8];
-            StartingMoney = new Int32[8];
+            StartingMoney = new int[8];
             UnknownRegion1 = new byte[40];
             HouseIndexAllocation = new byte[8];
             AISection = new AISection[8];
